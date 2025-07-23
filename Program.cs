@@ -20,7 +20,7 @@ namespace MyApp
     {
         static async Task Main(string[] args)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "lines.txt");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "lines.txt");
 
             string[] menu = new string[2] { "(1)lista walut", "(2)pojedyncza waluta" };
             await currData(path);
@@ -59,7 +59,7 @@ namespace MyApp
             {
                 string json = await response.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<List<Root>>(json);
-                string line = " ";
+
                 if (File.Exists(path))
                 {
                     if (new FileInfo(path).Length == 0)
@@ -68,7 +68,7 @@ namespace MyApp
                         {
                             foreach (var item in root.rates)
                             {
-                                line = $"{item.code} {item.currency} {item.mid}\n";
+                                string line = $"{item.code} {item.currency} {item.mid}\n";
                                 File.AppendAllText(path, line);
                                 line = " ";
                             }
@@ -88,7 +88,7 @@ namespace MyApp
                     {
                         foreach (var item in root.rates)
                         {
-                            line = $"{item.code}{item.currency}{item.mid}\n";
+                            string line = $"{item.code}{item.currency}{item.mid}\n";
                             File.WriteAllText(path, line);
                             line = " ";
                         }
